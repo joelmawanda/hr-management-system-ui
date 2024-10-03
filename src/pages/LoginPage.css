@@ -1,0 +1,47 @@
+.full_blue_bg {
+  /* background-image: linear-gradient(#0033A1,#000029); */
+  background-image: linear-gradient(#8080ff,#0147ab);
+  height: 100vh;
+}
+.main_column {
+  background-color: #ffffff;
+}
+.login_card {
+  width:100%;
+  margin-top: 5%;
+  background-color: #ffffff;
+  height: 370px;
+}
+#login_btn{
+  background-color: #0147ab;
+  width: 100%;}
+#b_boarder_input{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0%;
+}
+#input_icon {
+  margin-right: 0px;
+  padding-right: 0%;
+}
+#card_title_custom {
+  padding-top: 50px;
+  padding-bottom: 15px;
+  font-size: medium;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.primary-header {
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+#f_p_link {
+  font-size: small;
+  color: #0033A1;
+}

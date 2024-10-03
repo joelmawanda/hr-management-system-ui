@@ -1,0 +1,85 @@
+.App {
+  background-color: #f2f3f4;
+  height: fit-content;
+  min-height: 100vh;
+  height: fit-content;
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.standard_link {
+  text-decoration: none;
+  color: black;
+}
+/* #standard_stepper {
+  margin: 5%;
+} */
+#adjascent_col {
+  padding: 0px;
+  margin: 0px;
+  /* max-width: fit-content; */
+  /* max-width: fit-content; */
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  /* .App {
+    background-color: #F2F3F4;
+    min-height: 50%;
+  } */
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.App-link {
+  color: #61dafb;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@font-face {
+  font-family: Imported;
+  src: url(./font/BentonSans\ Cond\ Regular.otf);
+  
+}
+
+#root {
+  font-family: Imported;
+}
+
+/* .App {
+  height: 135vh;
+  background-color: #f2f3f3;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */

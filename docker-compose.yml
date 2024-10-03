@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  postgresdb:
+        container_name: postgresdb
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=test
+            - POSTGRES_DB=customer_loans
+  customer-loans:
+        container_name: customer-loans
+        image: customer-loans:1.0.0
+        environment:
+            - SERVER_PORT=8080
+            - PROFILE=dev
+            - DB_USER=postgres
+            - DB_PASS=test
+            - DB_MAX_CONN=5
+            - DB_URL=jdbc:postgresql://postgresdb:5432/customer_loans
+        ports:
+            - "8080:8080"
+        depends_on:
+            - postgresdb
+  customers-ui:
+    container_name: customer-loans-ui
+    build: ./
+    ports:
+      - "80:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+            - customer-loans  
+networks:
+    default:
+        name: customers-app-net
