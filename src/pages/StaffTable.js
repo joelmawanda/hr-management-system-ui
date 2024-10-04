@@ -139,8 +139,8 @@ const StaffTable = () => {
         spacing={2}
         sx={{ marginLeft: "5px", marginRight: "10px", marginTop: "20px" }}
       >
-        <Grid item md={2}></Grid>
-        <Grid item md={8}>
+        <Grid item md={1}></Grid>
+        <Grid item md={10}>
           <TableContainer component={Paper}>
             {alert.open === true ? (
               <AlertModal
@@ -250,7 +250,7 @@ const StaffTable = () => {
             </div>
           </Modal>
         </Grid>
-        <Grid item md={2}></Grid>
+        <Grid item md={1}></Grid>
       </Grid>
     </Box>
   );
