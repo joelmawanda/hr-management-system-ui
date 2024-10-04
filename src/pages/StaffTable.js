@@ -13,6 +13,8 @@ import {
   TextField,
   Typography,
   Paper,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 import API from "../config/API";
@@ -162,7 +164,6 @@ const StaffTable = () => {
           }}
         >
           <Typography variant="h6">Edit Staff</Typography>
-
           <TextField
             label="Date of Birth"
             type="date"
@@ -179,8 +180,7 @@ const StaffTable = () => {
               shrink: true,
             }}
           />
-
-          <TextField
+          {/* <TextField
             label="ID Photo"
             value={selectedStaff?.idPhoto || ""}
             onChange={(e) =>
@@ -188,7 +188,27 @@ const StaffTable = () => {
             }
             fullWidth
             margin="normal"
-          />
+          /> */}
+          <FormControl fullWidth margin="normal">
+            <InputLabel shrink htmlFor="id-photo-input">
+              ID Photo
+            </InputLabel>
+            <input
+              accept="image/*"
+              type="file"
+              id="id-photo-input"
+              //   onChange={handleImageChange}
+              style={{ marginTop: "8px" }} // Add margin to give space below label
+            />
+          </FormControl>
+          {selectedStaff?.idPhoto && (
+            <img
+              src={`data:image/jpeg;base64,${selectedStaff.idPhoto}`}
+              alt="Selected Staff ID"
+              style={{ width: "100px", height: "100px", marginTop: "10px" }}
+            />
+          )}
+
           <Button
             variant="contained"
             color="primary"
