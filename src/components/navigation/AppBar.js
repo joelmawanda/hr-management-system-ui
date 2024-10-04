@@ -44,7 +44,7 @@ export default function MenuAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Customer Loans API Performance
+            HR Management System
           </Typography>
           <Typography variant="h6" component="div" sx={{}}>
             Welcome, {username}

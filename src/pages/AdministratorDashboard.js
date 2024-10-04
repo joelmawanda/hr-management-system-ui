@@ -22,57 +22,128 @@ const AdministratorDashboard = () => {
   const getMetrics = async () => {
     let response;
     try {
-      response = await API.get(
-        `/admin/metrics/http.server.requests?tag=method:GET&tag=uri:/api/v1/loans/status`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      response = await API.get(`/actuator/metrics/http.server.requests`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (response.status === 200) {
         const data = response.data;
-        //Loop through the available tags to update the metrics
+
+        // Initialize counts
+        let successCount = 0;
+        let clientErrorCount = 0;
+        let exceptionCount = 0;
+
+        // Loop through available tags to process metrics
         data.availableTags.forEach((tag) => {
           switch (tag.tag) {
             case "outcome":
               tag.values.forEach((outcome) => {
-                switch (outcome) {
-                  case "SUCCESS":
-                    setNumPositiveRequests(numPositiveRequests + 1);
-                    break;
-                  case "CLIENT_ERROR":
-                    setNumNegativeRequests(numNegativeRequests + 1);
-
-                    break;
-                  default:
-                    break;
+                if (outcome === "SUCCESS") {
+                  successCount += 1; // Count successful requests
+                } else if (outcome === "CLIENT_ERROR") {
+                  clientErrorCount += 1; // Count client errors
                 }
               });
-
               break;
+
             case "exception":
             case "error":
               tag.values.forEach((value) => {
                 if (value !== "none") {
-                  setNumFailedValidations(numFailedValidations + 1);
+                  exceptionCount += 1; // Count requests with exceptions/errors
                 }
               });
               break;
+
             default:
               break;
           }
         });
 
-        // Update the number of requests
-        setNumRequests(data.measurements[0].value);
+        // Set the state for positive (successful) and negative (failed) requests
+        setNumPositiveRequests(successCount);
+        setNumNegativeRequests(clientErrorCount);
+
+        // Summing the number of positive and negative requests
+        const total = successCount + clientErrorCount;
+
+        // Set the total number of requests as the sum of positive and negative requests
+        setNumRequests(total);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  // const getMetrics = async () => {
+  //   //http://localhost:8080/actuator/metrics/http.server.requests?tag=uri:/api/staff
+  //   let response;
+  //   try {
+  //     response = await API.get(`/actuator/metrics/http.server.requests`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Access-Control-Allow-Origin": "*",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     if (response.status === 200) {
+  //       const data = response.data;
+
+  //       // Initialize counts
+  //       let successCount = 0;
+  //       let clientErrorCount = 0;
+  //       let exceptionCount = 0;
+
+  //       // Loop through available tags to process metrics
+  //       data.availableTags.forEach((tag) => {
+  //         switch (tag.tag) {
+  //           case "outcome":
+  //             tag.values.forEach((outcome) => {
+  //               if (outcome === "SUCCESS") {
+  //                 successCount += 1; // Count successful requests
+  //               } else if (outcome === "CLIENT_ERROR") {
+  //                 clientErrorCount += 1; // Count client errors
+  //               }
+  //             });
+  //             break;
+
+  //           case "exception":
+  //           case "error":
+  //             tag.values.forEach((value) => {
+  //               if (value !== "none") {
+  //                 exceptionCount += 1; // Count requests with exceptions/errors
+  //               }
+  //             });
+  //             break;
+
+  //           default:
+  //             break;
+  //         }
+  //       });
+
+  //       // Set the state for positive (successful) and negative (failed) requests
+  //       setNumPositiveRequests(successCount);
+  //       setNumNegativeRequests(clientErrorCount);
+  //       setNumFailedValidations(exceptionCount);
+
+  //       // Set the total number of requests from the COUNT metric
+  //       const totalRequests = data.measurements.find(
+  //         (measurement) => measurement.statistic === "COUNT"
+  //       );
+  //       if (totalRequests) {
+  //         setNumRequests(totalRequests.value);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <Box>
@@ -89,25 +160,25 @@ const AdministratorDashboard = () => {
             name={"Number of Requests"}
           />
         </Grid>
-        <Grid item md={3}>
+        {/* <Grid item md={3}>
           <ShareholderCard
             icon={<PeopleIcon fontSize="large" sx={{ color: "#FF9E0C" }} />}
             shareholderCount={numFailedValidations}
             name={"Number of failed validations"}
           />
-        </Grid>
+        </Grid> */}
         <Grid item md={3}>
           <ShareholderCard
             icon={<ApartmentIcon fontSize="large" sx={{ color: "#10C682" }} />}
             shareholderCount={numPositiveRequests}
-            name={"Number of Positive Requests"}
+            name={"Number of Successful Requests"}
           />
         </Grid>
         <Grid item md={3}>
           <ShareholderCard
             icon={<GroupsIcon fontSize="large" sx={{ color: "#D37B13" }} />}
             shareholderCount={numNegativeRequests}
-            name={"Number of Negative Requests"}
+            name={"Number of Failed Requests"}
           />
         </Grid>
       </Grid>

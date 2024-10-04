@@ -24,7 +24,7 @@ const LoginPage = () => {
     let data = { username, password };
     let response;
     try {
-      response = await API.post(`/api/v1/loans/authenticate`, data, {
+      response = await API.post(`/api/staff/authenticate`, data, {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
@@ -56,7 +56,7 @@ const LoginPage = () => {
             <></>
           )}
           <Row style={{ paddingTop: "10%" }}>
-            <h3 className="primary-header">Customer Loans Management System</h3>
+            <h3 className="primary-header">HR Management System</h3>
           </Row>
           <Row>
             <Card className="login_card">
