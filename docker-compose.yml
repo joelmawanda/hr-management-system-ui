@@ -34,3 +34,56 @@ services:
 networks:
     default:
         name: hr_management-app-net
+
+
+
+# version: '3.9'
+
+# services:
+#   postgresdb:
+#     container_name: postgresdb
+#     image: postgres:latest
+#     environment:
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=test
+#       - POSTGRES_DB=hr_db
+#     networks:
+#       - hr_management-app-net
+
+#   hr_management:
+#     container_name: hr_management
+#     build:
+#       context: ./backend  # Specify the context for the backend
+#       dockerfile: Dockerfile  # Use the Dockerfile in the backend directory
+#     environment:
+#       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/hr_db
+#       - SPRING_DATASOURCE_USERNAME=postgres
+#       - SPRING_DATASOURCE_PASSWORD=test
+#     ports:
+#       - "8080:8080"
+#     depends_on:
+#       - postgresdb
+#     networks:
+#       - hr_management-app-net
+
+#   hr_management-ui:
+#     container_name: hr_management-ui
+#     build:
+#       context: ./frontend  # Specify the context for the frontend
+#       dockerfile: Dockerfile  # Use the Dockerfile in the frontend directory
+#     ports:
+#       - "80:80"
+#     extra_hosts:
+#       - "host.docker.internal:host-gateway"
+#     depends_on:
+#       - hr_management  
+#     networks:
+#       - hr_management-app-net
+
+# networks:
+#   hr_management-app-net:
+#     driver: bridge
+
+
+
+
