@@ -35,7 +35,8 @@ const LoginPage = () => {
         navigate("/administrator-dashboard", { replace: true });
       }
     } catch (error) {
-      dispatch(setAlertMessage(error.response.data.message));
+      // dispatch(setAlertMessage(error.response.data.message));
+      dispatch(setAlertMessage("Authentication Failed"));
       dispatch(setAlertTitle("Error"));
       dispatch(openAlert());
       navigate("/", { replace: true });
