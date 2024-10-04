@@ -163,7 +163,7 @@ const StaffRegistration = () => {
                         <Form.Control
                           id="b_boarder_input"
                           placeholder="Date of Birth"
-                          type="date" // Set the input type to "date"
+                          type="date"
                           onChange={(e) => setDate(e.target.value)}
                         ></Form.Control>
                       </Col>
@@ -189,38 +189,7 @@ const StaffRegistration = () => {
                       </Col>
                     </Row>
                   </Form.Group>
-                  {/* <Form.Group className="mb-3" controlId="formGroupPassword">
-                    <Row>
-                      <Col
-                        id="input_icon"
-                        sm={2}
-                        md={2}
-                        lg={2}
-                        style={{ marginTop: "15px" }}
-                      >
-                        <Icon
-                          path={mdiLock}
-                          title="User Profile"
-                          size={1}
-                          horizontal
-                          color="grey"
-                        />
-                      </Col>
-                      <Col
-                        sm={10}
-                        md={10}
-                        lg={10}
-                        style={{ marginTop: "15px" }}
-                      >
-                        <Form.Control
-                          id="b_boarder_input"
-                          type="password"
-                          placeholder="Password"
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                      </Col>
-                    </Row>
-                  </Form.Group> */}
+
                   <Row style={{ marginTop: "1%" }}>
                     <Col sm={12} md={2} lg={2}></Col>
                     <Col sm={12} md={10} lg={10}>
