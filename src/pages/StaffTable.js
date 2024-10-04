@@ -32,9 +32,6 @@ const StaffTable = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
 
-  console.log("The token: ", token);
-  console.log("Staff data: ", staffData);
-
   useEffect(() => {
     const fetchStaffData = async () => {
       try {
