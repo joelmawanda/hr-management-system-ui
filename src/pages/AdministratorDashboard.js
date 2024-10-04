@@ -95,13 +95,6 @@ const AdministratorDashboard = () => {
             name={"Number of Requests"}
           />
         </Grid>
-        {/* <Grid item md={3}>
-          <ShareholderCard
-            icon={<PeopleIcon fontSize="large" sx={{ color: "#FF9E0C" }} />}
-            shareholderCount={numFailedValidations}
-            name={"Number of failed validations"}
-          />
-        </Grid> */}
         <Grid item md={3}>
           <ShareholderCard
             icon={<ApartmentIcon fontSize="large" sx={{ color: "#10C682" }} />}
