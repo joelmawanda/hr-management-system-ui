@@ -60,7 +60,13 @@ const StaffRegistration = () => {
         }
       );
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.data);
+        dispatch(setAlertMessage(response.data.message));
+        dispatch(
+          setAlertTitle(
+            `Your Employee Number is: ${response.data.operation_description}`
+          )
+        );
+        dispatch(openAlert());
         navigate("", { replace: true });
       }
     } catch (error) {
