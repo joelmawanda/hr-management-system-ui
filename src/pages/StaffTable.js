@@ -24,6 +24,7 @@ const StaffTable = () => {
   const [selectedStaff, setSelectedStaff] = useState(null);
 
   console.log("The token: ", token);
+  console.log("Staff data: ", staffData);
 
   useEffect(() => {
     const fetchStaffData = async () => {
@@ -35,7 +36,11 @@ const StaffTable = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setStaffData(response.data.data);
+        const filteredData = response.data.data.filter(
+          (staff) => staff.surname !== null
+        );
+
+        setStaffData(filteredData);
       } catch (error) {
         console.error("Error fetching staff data:", error);
       }
@@ -56,7 +61,7 @@ const StaffTable = () => {
 
   const handleSaveChanges = async () => {
     try {
-      await axios.put(`/api/staff/update`, selectedStaff, {
+      await API.put(`/api/staff/update`, selectedStaff, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
