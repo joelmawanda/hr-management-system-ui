@@ -25,21 +25,6 @@ const App = () => {
           element={<ProtectedRoute element={<StaffTable />} />}
         />
       </Routes>
-      {/* <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route
-          path="/administrator-dashboard"
-          element={<AdministratorDashboard />}
-        />
-        <Route
-          path="/staff-register"
-          element={<StaffRegistration />}
-        />
-        <Route
-          path="/staff"
-          element={<StaffTable />}
-        />
-      </Routes> */}
     </div>
   );
 };
