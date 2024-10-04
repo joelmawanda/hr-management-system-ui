@@ -16,29 +16,36 @@ const StaffRegistration = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [otherNames, setOtherName] = useState("");
+  const [date, setDate] = useState("");
+  const [photo, setPhoto] = useState("");
+
   const alert = useSelector((state) => state.alert);
 
   const login = async (event) => {
     event.preventDefault();
-    let data = { username, password };
+    let data = { username, otherNames, date, photo };
     let response;
     try {
-      response = await API.post(`/api/staff/authenticate`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      });
+      response = await API.put(
+        `/api/staff/register?validationCode=0981456004`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
       if (response.status === 200) {
         localStorage.setItem("token", response.data.data);
-        navigate("/administrator-dashboard", { replace: true });
+        navigate("", { replace: true });
       }
     } catch (error) {
       dispatch(setAlertMessage(error.response.data.message));
       dispatch(setAlertTitle("Error"));
       dispatch(openAlert());
-      navigate("/", { replace: true });
+      navigate("", { replace: true });
     }
   };
 
@@ -105,12 +112,12 @@ const StaffRegistration = () => {
                         <Form.Control
                           id="b_boarder_input"
                           placeholder="Other Names"
-                          onChange={(e) => setUsername(e.target.value)}
+                          onChange={(e) => setOtherName(e.target.value)}
                         ></Form.Control>
                       </Col>
                     </Row>
                   </Form.Group>
-                  <Form.Group className="mb-3" controlId="formGroupEmail">
+                  <Form.Group className="mb-3" controlId="Date">
                     <Row>
                       <Col id="input_icon" sm={2} md={2} lg={2}>
                         <Icon
@@ -125,7 +132,8 @@ const StaffRegistration = () => {
                         <Form.Control
                           id="b_boarder_input"
                           placeholder="Date of Birth"
-                          onChange={(e) => setUsername(e.target.value)}
+                          type="date" // Set the input type to "date"
+                          onChange={(e) => setDate(e.target.value)}
                         ></Form.Control>
                       </Col>
                     </Row>
@@ -145,7 +153,7 @@ const StaffRegistration = () => {
                         <Form.Control
                           id="b_boarder_input"
                           placeholder="ID Photo"
-                          onChange={(e) => setUsername(e.target.value)}
+                          onChange={(e) => setPhoto(e.target.value)}
                         ></Form.Control>
                       </Col>
                     </Row>
