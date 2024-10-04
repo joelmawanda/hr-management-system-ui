@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AdministratorDashboard from "./pages/AdministratorDashboard";
 import LoginPage from "./pages/LoginPage";
+import StaffRegistration from "./pages/StaffRegistration";
 
 const App = () => {
   return (
@@ -12,6 +13,10 @@ const App = () => {
         <Route
           path="/administrator-dashboard"
           element={<AdministratorDashboard />}
+        />
+        <Route
+          path="/staff-register"
+          element={<StaffRegistration />}
         />
       </Routes>
     </div>
