@@ -11,14 +11,15 @@ import AlertModal from "../components/alertModal";
 import API from "../config/API";
 import { openAlert, setAlertMessage, setAlertTitle } from "../store/alertSlice";
 import "./LoginPage.css";
+import { FormControl, InputLabel } from "@mui/material";
 
 const StaffRegistration = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [surname, setUsername] = useState("");
   const [otherNames, setOtherName] = useState("");
-  const [date, setDate] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [dateOfBirth, setDate] = useState("");
+  const [idPhoto, setPhoto] = useState("");
 
   const alert = useSelector((state) => state.alert);
 
@@ -44,9 +45,24 @@ const StaffRegistration = () => {
     fetchValidationCode();
   }, []);
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const base64String = reader.result.split(",")[1];
+      setPhoto(base64String);
+      // setSelectedStaff({ ...selectedStaff, idPhoto: base64String });
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   const registerStaff = async (event) => {
     event.preventDefault();
-    let data = { username, otherNames, date, photo };
+    let data = { surname, otherNames, dateOfBirth, idPhoto };
     let response;
     try {
       response = await API.put(
@@ -169,6 +185,7 @@ const StaffRegistration = () => {
                       </Col>
                     </Row>
                   </Form.Group>
+
                   <Form.Group className="mb-3" controlId="formGroupEmail">
                     <Row>
                       <Col id="input_icon" sm={2} md={2} lg={2}>
@@ -181,11 +198,18 @@ const StaffRegistration = () => {
                         />
                       </Col>
                       <Col sm={10} md={10} lg={10}>
-                        <Form.Control
-                          id="b_boarder_input"
-                          placeholder="ID Photo"
-                          onChange={(e) => setPhoto(e.target.value)}
-                        ></Form.Control>
+                        <FormControl fullWidth margin="normal">
+                          <InputLabel shrink htmlFor="id-photo-input">
+                            ID Photo
+                          </InputLabel>
+                          <input
+                            accept="image/*"
+                            type="file"
+                            id="id-photo-input"
+                            onChange={handleImageChange}
+                            style={{ marginTop: "8px" }}
+                          />
+                        </FormControl>
                       </Col>
                     </Row>
                   </Form.Group>

@@ -75,7 +75,7 @@ const StaffTable = () => {
     };
 
     if (file) {
-      reader.readAsDataURL(file); // Read the file and convert to Base64
+      reader.readAsDataURL(file); 
     }
   };
 
