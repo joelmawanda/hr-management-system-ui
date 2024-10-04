@@ -67,32 +67,48 @@ const StaffTable = () => {
 
   const handleSaveChanges = async () => {
     try {
-      await API.put(
-        `/api/staff/update?employeeNumber=61f33dc3-0`,
+      const employeeNumber = selectedStaff.employeeNumber;
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+
+      const updateResponse = await API.put(
+        `/api/staff/update?employeeNumber=${employeeNumber}`,
         selectedStaff,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers }
       );
 
-      const response = await API.get(`/api/staff/retrieve`);
-
-      if (response.status === 200) {
-        dispatch(setAlertMessage(response.data.message));
+      if (updateResponse.status === 200) {
+        dispatch(
+          setAlertMessage(
+            updateResponse.data.message || "Staff updated successfully."
+          )
+        );
         dispatch(setAlertTitle("Success"));
         dispatch(openAlert());
-        setStaffData(response.data.data);
-      }
 
-      handleCloseModal();
+        const staffResponse = await API.get(`/api/staff/retrieve`, { headers });
+        const filteredUpadatedData = staffResponse.data.data.filter(
+          (staff) => staff.surname !== null
+        );
+
+        setStaffData(filteredUpadatedData);
+
+        handleCloseModal();
+      }
     } catch (error) {
       console.error("Error updating staff data:", error);
-      dispatch(setAlertMessage(error.response.data.message));
+
+      const errorMessage =
+        error.response?.data?.message ||
+        "An error occurred while updating the staff data.";
+
+      dispatch(setAlertMessage(errorMessage));
       dispatch(setAlertTitle("Error"));
       dispatch(openAlert());
+
       handleCloseModal();
     }
   };
