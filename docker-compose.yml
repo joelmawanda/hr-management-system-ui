@@ -8,7 +8,7 @@ services:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=test
             - POSTGRES_DB=hr_db
-  customer-loans:
+  hr_management:
         container_name: hr_management
         image: hr_management:1.0.0
         environment:
@@ -22,7 +22,7 @@ services:
             - "8080:8080"
         depends_on:
             - postgresdb
-  customers-ui:
+  hr_management-ui:
     container_name: hr_management-ui
     build: ./
     ports:
