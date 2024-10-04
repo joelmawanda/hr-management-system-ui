@@ -61,14 +61,18 @@ const StaffTable = () => {
 
   const handleSaveChanges = async () => {
     try {
-      await API.put(`/api/staff/update`, selectedStaff, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await API.put(
+        `/api/staff/update?employeeNumber=61f33dc3-0`,
+        selectedStaff,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      const response = await axios.get("/api/staff/retrieve");
+      const response = await API.get(`/api/staff/retrieve`);
       setStaffData(response.data);
       handleCloseModal();
     } catch (error) {
