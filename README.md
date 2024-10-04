@@ -8,8 +8,10 @@ This admin interface was developed using react js and the reasons are:- React is
 # Clone the repository
 git clone https://github.com/joelmawanda/hr-management-system-ui.git
 # Run the application
-  1. **Docker build -t app .**
-  2. **Docker run -p 3000:3000 app**
+  1. **docker build -t app .**
+  2. **docker run -p 3000:3000 app**
+  3. **docker-compose up --build**
+
 # Verify the application is running:
 Once the container is running, verify that the application is running by opening a web browser and navigating to **`http://localhost:3000`** or by using a tool such     as `curl`
 
