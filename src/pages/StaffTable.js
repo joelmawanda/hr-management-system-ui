@@ -179,6 +179,16 @@ const StaffTable = () => {
               shrink: true,
             }}
           />
+
+          <TextField
+            label="ID Photo"
+            value={selectedStaff?.idPhoto || ""}
+            onChange={(e) =>
+              setSelectedStaff({ ...selectedStaff, idPhoto: e.target.value })
+            }
+            fullWidth
+            margin="normal"
+          />
           <Button
             variant="contained"
             color="primary"
