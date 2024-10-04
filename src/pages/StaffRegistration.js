@@ -60,12 +60,10 @@ const StaffRegistration = () => {
         }
       );
       if (response.status === 200) {
-        dispatch(setAlertMessage(response.data.message));
         dispatch(
-          setAlertTitle(
-            `Your Employee Number is: ${response.data.operation_description}`
-          )
+          setAlertMessage(`Your Employee Number is: ${response.data.data}`)
         );
+        dispatch(setAlertTitle("Success"));
         dispatch(openAlert());
         navigate("", { replace: true });
       }
