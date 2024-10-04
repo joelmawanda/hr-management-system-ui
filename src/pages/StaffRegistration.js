@@ -1,6 +1,6 @@
 import { mdiAccount, mdiLock } from "@mdi/js";
 import Icon from "@mdi/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -22,13 +22,35 @@ const StaffRegistration = () => {
 
   const alert = useSelector((state) => state.alert);
 
-  const login = async (event) => {
+  const [validationCode, setValidationCode] = useState("");
+
+  useEffect(() => {
+    const fetchValidationCode = async () => {
+      try {
+        const response = await API.get(`/api/staff/generateValidationCode`, {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
+
+        if (response.status === 200) {
+          setValidationCode(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching validation code:", error);
+      }
+    };
+    fetchValidationCode();
+  }, []);
+
+  const registerStaff = async (event) => {
     event.preventDefault();
     let data = { username, otherNames, date, photo };
     let response;
     try {
       response = await API.put(
-        `/api/staff/register?validationCode=0981456004`,
+        `/api/staff/register?validationCode=${validationCode}`,
         data,
         {
           headers: {
@@ -70,13 +92,18 @@ const StaffRegistration = () => {
               <Row>
                 <Col sm={2} md={2} lg={2}></Col>
                 <Col sm={8} md={8} lg={8}>
+                  {/* <p>
+                    {validationCode
+                      ? `Your Validation Code is: ${validationCode}`
+                      : "No validation code generated yet."}
+                  </p> */}
                   <Card.Title id="card_title_custom">Staff Sign Up</Card.Title>
                 </Col>
                 <Col sm={2} md={2} lg={2}></Col>
               </Row>
 
               <Card.Body>
-                <Form onSubmit={login}>
+                <Form onSubmit={registerStaff}>
                   <Form.Group className="mb-3" controlId="formGroupEmail">
                     <Row>
                       <Col id="input_icon" sm={2} md={2} lg={2}>
