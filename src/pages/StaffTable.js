@@ -16,8 +16,14 @@ import {
 } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 import API from "../config/API";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { openAlert, setAlertMessage, setAlertTitle } from "../store/alertSlice";
 
 const StaffTable = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const alert = useSelector((state) => state.alert);
   const token = localStorage.getItem("token");
   const [staffData, setStaffData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -73,10 +79,21 @@ const StaffTable = () => {
       );
 
       const response = await API.get(`/api/staff/retrieve`);
-      setStaffData(response.data);
+
+      if (response.status === 200) {
+        dispatch(setAlertMessage(response.data.message));
+        dispatch(setAlertTitle("Success"));
+        dispatch(openAlert());
+        setStaffData(response.data.data);
+      }
+
       handleCloseModal();
     } catch (error) {
       console.error("Error updating staff data:", error);
+      dispatch(setAlertMessage(error.response.data.message));
+      dispatch(setAlertTitle("Error"));
+      dispatch(openAlert());
+      handleCloseModal();
     }
   };
 
