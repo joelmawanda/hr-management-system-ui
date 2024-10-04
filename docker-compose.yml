@@ -17,7 +17,7 @@ services:
             - DB_USER=postgres
             - DB_PASS=test
             - DB_MAX_CONN=5
-            - DB_URL=jdbc:postgresql://postgresdb:5432/customer_loans
+            - DB_URL=jdbc:postgresql://postgresdb:5432/hr_db
         ports:
             - "8080:8080"
         depends_on:
