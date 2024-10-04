@@ -15,6 +15,8 @@ import {
   Paper,
   FormControl,
   InputLabel,
+  Box,
+  Grid,
 } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 import API from "../config/API";
@@ -22,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { openAlert, setAlertMessage, setAlertTitle } from "../store/alertSlice";
 import AlertModal from "../components/alertModal";
+import MenuAppBar from "../components/navigation/AppBar";
 
 const StaffTable = () => {
   const dispatch = useDispatch();
@@ -128,116 +131,128 @@ const StaffTable = () => {
   };
 
   return (
-    <div>
-      <TableContainer component={Paper}>
-        {alert.open === true ? (
-          <AlertModal
-            sx={{ margin: "20px", width: "50%", align: "right" }}
-          ></AlertModal>
-        ) : (
-          <></>
-        )}
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Image</TableCell>
-              <TableCell>Surname</TableCell>
-              <TableCell>Other Names</TableCell>
-              <TableCell>Date of Birth</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {staffData.map((staff) => (
-              <TableRow key={staff.id}>
-                <TableCell>
-                  {staff.idPhoto ? (
-                    <img
-                      src={`data:image/jpeg;base64,${staff.idPhoto}`}
-                      alt="Staff ID"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "4px",
-                      }}
-                    />
-                  ) : (
-                    <span>No Image</span>
-                  )}
-                </TableCell>
-                <TableCell>{staff.surname}</TableCell>
-                <TableCell>{staff.otherNames}</TableCell>
-                <TableCell>{staff.dateOfBirth}</TableCell>
-                <TableCell>
-                  <IconButton onClick={() => handleOpenModal(staff)}>
-                    <Visibility />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <Box>
+      <MenuAppBar />
 
-      {/* Modal for Editing Staff Data */}
-      <Modal open={openModal} onClose={handleCloseModal}>
-        <div
-          style={{
-            padding: "20px",
-            backgroundColor: "white",
-            margin: "100px auto",
-            maxWidth: "400px",
-            borderRadius: "8px",
-          }}
-        >
-          <Typography variant="h6">Edit Staff</Typography>
-          <TextField
-            label="Date of Birth"
-            type="date"
-            value={selectedStaff?.dateOfBirth || ""}
-            onChange={(e) =>
-              setSelectedStaff({
-                ...selectedStaff,
-                dateOfBirth: e.target.value,
-              })
-            }
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+      <Grid
+        container
+        spacing={2}
+        sx={{ marginLeft: "5px", marginRight: "10px", marginTop: "20px" }}
+      >
+        <Grid item md={3}></Grid>
+        <Grid item md={6}>
+          <TableContainer component={Paper}>
+            {alert.open === true ? (
+              <AlertModal
+                sx={{ margin: "20px", width: "50%", align: "right" }}
+              ></AlertModal>
+            ) : (
+              <></>
+            )}
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Image</TableCell>
+                  <TableCell>Surname</TableCell>
+                  <TableCell>Other Names</TableCell>
+                  <TableCell>Date of Birth</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {staffData.map((staff) => (
+                  <TableRow key={staff.id}>
+                    <TableCell>
+                      {staff.idPhoto ? (
+                        <img
+                          src={`data:image/jpeg;base64,${staff.idPhoto}`}
+                          alt="Staff ID"
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            borderRadius: "4px",
+                          }}
+                        />
+                      ) : (
+                        <span>No Image</span>
+                      )}
+                    </TableCell>
+                    <TableCell>{staff.surname}</TableCell>
+                    <TableCell>{staff.otherNames}</TableCell>
+                    <TableCell>{staff.dateOfBirth}</TableCell>
+                    <TableCell>
+                      <IconButton onClick={() => handleOpenModal(staff)}>
+                        <Visibility />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-          <FormControl fullWidth margin="normal">
-            <InputLabel shrink htmlFor="id-photo-input">
-              ID Photo
-            </InputLabel>
-            <input
-              accept="image/*"
-              type="file"
-              id="id-photo-input"
-              onChange={handleImageChange}
-              style={{ marginTop: "8px" }}
-            />
-          </FormControl>
-          {selectedStaff?.idPhoto && (
-            <img
-              src={`data:image/jpeg;base64,${selectedStaff.idPhoto}`}
-              alt="Selected Staff ID"
-              style={{ width: "100px", height: "100px", marginTop: "10px" }}
-            />
-          )}
+          {/* Modal for Editing Staff Data */}
+          <Modal open={openModal} onClose={handleCloseModal}>
+            <div
+              style={{
+                padding: "20px",
+                backgroundColor: "white",
+                margin: "100px auto",
+                maxWidth: "400px",
+                borderRadius: "8px",
+              }}
+            >
+              <Typography variant="h6">Edit Staff</Typography>
+              <TextField
+                label="Date of Birth"
+                type="date"
+                value={selectedStaff?.dateOfBirth || ""}
+                onChange={(e) =>
+                  setSelectedStaff({
+                    ...selectedStaff,
+                    dateOfBirth: e.target.value,
+                  })
+                }
+                fullWidth
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
 
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSaveChanges}
-          >
-            Save Changes
-          </Button>
-        </div>
-      </Modal>
-    </div>
+              <FormControl fullWidth margin="normal">
+                <InputLabel shrink htmlFor="id-photo-input">
+                  ID Photo
+                </InputLabel>
+                <input
+                  accept="image/*"
+                  type="file"
+                  id="id-photo-input"
+                  onChange={handleImageChange}
+                  style={{ marginTop: "8px" }}
+                />
+              </FormControl>
+              {selectedStaff?.idPhoto && (
+                <img
+                  src={`data:image/jpeg;base64,${selectedStaff.idPhoto}`}
+                  alt="Selected Staff ID"
+                  style={{ width: "100px", height: "100px", marginTop: "10px" }}
+                />
+              )}
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSaveChanges}
+              >
+                Save Changes
+              </Button>
+            </div>
+          </Modal>
+        </Grid>
+        <Grid item md={3}></Grid>
+      </Grid>
+    </Box>
   );
 };
 
