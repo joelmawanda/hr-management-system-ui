@@ -25,7 +25,7 @@ import AlertModal from "../components/alertModal";
 
 const StaffTable = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const alert = useSelector((state) => state.alert);
   const token = localStorage.getItem("token");
   const [staffData, setStaffData] = useState([]);
@@ -66,6 +66,20 @@ const StaffTable = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
     setSelectedStaff(null);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const base64String = reader.result.split(",")[1];
+      setSelectedStaff({ ...selectedStaff, idPhoto: base64String });
+    };
+
+    if (file) {
+      reader.readAsDataURL(file); // Read the file and convert to Base64
+    }
   };
 
   const handleSaveChanges = async () => {
@@ -180,15 +194,7 @@ const StaffTable = () => {
               shrink: true,
             }}
           />
-          {/* <TextField
-            label="ID Photo"
-            value={selectedStaff?.idPhoto || ""}
-            onChange={(e) =>
-              setSelectedStaff({ ...selectedStaff, idPhoto: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          /> */}
+
           <FormControl fullWidth margin="normal">
             <InputLabel shrink htmlFor="id-photo-input">
               ID Photo
@@ -197,8 +203,8 @@ const StaffTable = () => {
               accept="image/*"
               type="file"
               id="id-photo-input"
-              //   onChange={handleImageChange}
-              style={{ marginTop: "8px" }} // Add margin to give space below label
+              onChange={handleImageChange}
+              style={{ marginTop: "8px" }}
             />
           </FormControl>
           {selectedStaff?.idPhoto && (
