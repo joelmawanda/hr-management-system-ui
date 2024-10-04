@@ -105,7 +105,8 @@ const StaffRegistration = () => {
             <h3 className="primary-header">HR Management System</h3>
           </Row>
           <Row>
-            <Card className="login_card">
+            {/* <Card className="login_card"> */}
+            <Card className="">
               <Row>
                 <Col sm={2} md={2} lg={2}></Col>
                 <Col sm={8} md={8} lg={8}>
