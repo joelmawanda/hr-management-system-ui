@@ -162,24 +162,7 @@ const StaffTable = () => {
           }}
         >
           <Typography variant="h6">Edit Staff</Typography>
-          <TextField
-            label="Surname"
-            value={selectedStaff?.surname || ""}
-            onChange={(e) =>
-              setSelectedStaff({ ...selectedStaff, surname: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Other Names"
-            value={selectedStaff?.otherNames || ""}
-            onChange={(e) =>
-              setSelectedStaff({ ...selectedStaff, otherNames: e.target.value })
-            }
-            fullWidth
-            margin="normal"
-          />
+
           <TextField
             label="Date of Birth"
             type="date"
