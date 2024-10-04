@@ -52,7 +52,6 @@ const StaffRegistration = () => {
     reader.onloadend = () => {
       const base64String = reader.result.split(",")[1];
       setPhoto(base64String);
-      // setSelectedStaff({ ...selectedStaff, idPhoto: base64String });
     };
 
     if (file) {
@@ -81,13 +80,11 @@ const StaffRegistration = () => {
         );
         dispatch(setAlertTitle("Success"));
         dispatch(openAlert());
-        navigate("", { replace: true });
       }
     } catch (error) {
       dispatch(setAlertMessage(error.response.data.message));
       dispatch(setAlertTitle("Error"));
       dispatch(openAlert());
-      navigate("", { replace: true });
     }
   };
 
