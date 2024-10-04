@@ -75,7 +75,7 @@ const StaffTable = () => {
     };
 
     if (file) {
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
     }
   };
 
@@ -140,6 +140,7 @@ const StaffTable = () => {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>Image</TableCell>
               <TableCell>Surname</TableCell>
               <TableCell>Other Names</TableCell>
               <TableCell>Date of Birth</TableCell>
@@ -149,6 +150,21 @@ const StaffTable = () => {
           <TableBody>
             {staffData.map((staff) => (
               <TableRow key={staff.id}>
+                <TableCell>
+                  {staff.idPhoto ? (
+                    <img
+                      src={`data:image/jpeg;base64,${staff.idPhoto}`}
+                      alt="Staff ID"
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "4px",
+                      }}
+                    />
+                  ) : (
+                    <span>No Image</span>
+                  )}
+                </TableCell>
                 <TableCell>{staff.surname}</TableCell>
                 <TableCell>{staff.otherNames}</TableCell>
                 <TableCell>{staff.dateOfBirth}</TableCell>
