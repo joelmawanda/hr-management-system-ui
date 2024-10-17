@@ -32,14 +32,16 @@ const LoginPage = () => {
       });
       if (response.status === 200) {
         localStorage.setItem("token", response.data.data);
-        navigate("/administrator-dashboard", { replace: true });
+        //navigate("/administrator-dashboard", { replace: true });
+        navigate("/administrator-dashboard");
       }
     } catch (error) {
       // dispatch(setAlertMessage(error.response.data.message));
       dispatch(setAlertMessage("Authentication Failed"));
       dispatch(setAlertTitle("Error"));
       dispatch(openAlert());
-      navigate("/", { replace: true });
+      // navigate("/", { replace: true });
+      navigate("/");
     }
   };
 
